@@ -1,12 +1,10 @@
-# from flask import Flask
-# from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
+from config import Config
+
+app = Flask(__name__)
+app.config.from_object(Config)
 
 
-
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost:5432/tem_1'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# db = SQLAlchemy(app)
-
+from application import routes
 
 

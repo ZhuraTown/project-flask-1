@@ -1,6 +1,9 @@
-from flask import Flask, render_template, redirect, url_for, request
+# -*- coding: utf-8 -*-
 
-app = Flask(__name__)
+from flask import render_template, redirect, url_for, request, flash
+
+from application import app
+from application.forms import LoginForm
 
 
 @app.route('/', methods=['GET'])
@@ -32,5 +35,10 @@ def register_user():
         return render_template('register_form.html')
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.route('/login')
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash('Login requested for user {}, remember_me={}'.format(form.username.data, form.remember_me.data))
+        return redirect('/index')
+    return render_template('login.html', title='Sign In', form=form)

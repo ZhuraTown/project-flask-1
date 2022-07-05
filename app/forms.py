@@ -53,3 +53,8 @@ class EmptyForm(FlaskForm):
 class PostForm(FlaskForm):
     post = TextAreaField('Напиши что-нибудь', validators=[DataRequired(), Length(min=1, max=140)])
     submit = SubmitField('Отправить')
+
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Почта', validators=[DataRequired(), Email()])
+    submit = SubmitField('Сбросить пароль')

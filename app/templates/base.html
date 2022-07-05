@@ -30,6 +30,7 @@
         <nav class="navbar bg-light">
           <div class="container-fluid">
             <a class="navbar-brand" href="{{ url_for('main') }}">Главная</a>
+            <a class="navbar-brand" href="{{ url_for('explore') }}">Исследовать</a>
             <a class="navbar-brand" href="{{ url_for('blog') }}">Блог</a>
             <a class="navbar-brand" href="{{ url_for('about') }}">Об сайте</a>
                 {% if current_user.is_anonymous %}

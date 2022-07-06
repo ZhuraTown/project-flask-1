@@ -55,9 +55,9 @@ class User(UserMixin, db.Model):
         own = Post.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Post.timestamp.desc())
 
-    def get_reset_password(self, expires_in: int = 600):
+    def get_reset_password_token(self, expires_in: int = 600):
         return jwt.encode({"reset_password": self.id, 'exp': time() + expires_in},
-                          app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+                          app.config['SECRET_KEY'], algorithm='HS256')
 
     @staticmethod
     def verify_reset_password_token(token: str):
@@ -70,7 +70,6 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return "<User {}>".format(self.username)
-
 
 
 class Post(db.Model):

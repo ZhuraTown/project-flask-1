@@ -179,4 +179,20 @@ def reset_password_request():
             send_password_reset_email(user)
         flash('Следуйте инструкциям, поступившим на почту!')
         redirect(url_for('login'))
-    return render_template('reset_password.html', form=form, title='Сброс пароля')
+    return render_template('reset_password_request.html', form=form, title='Сброс пароля')
+
+
+@app.route('/reset_password/<token>', methods=['GET', "POST"])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for("main"))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('main'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Ваш пароль успешно изменён!')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)

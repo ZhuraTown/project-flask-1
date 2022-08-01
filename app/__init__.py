@@ -3,6 +3,7 @@ import os
 
 from logging.handlers import SMTPHandler, RotatingFileHandler
 
+from elasticsearch import Elasticsearch
 from flask import Flask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -10,6 +11,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_moment import Moment
+
 
 #  Почтовый локальный сервер
 # python -m smtpd -n -c DebuggingServer localhost:8025
@@ -45,6 +47,9 @@ def create_app(class_config=Config):
     app.register_blueprint(errors_bp)
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(main_bp, url_prefix='/main')
+
+    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
+        if app.config['ELASTICSEARCH_URL'] else None
 
     if not app.debug:
         if app.config['MAIL_SERVER'] and not app.testing:

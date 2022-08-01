@@ -10,6 +10,8 @@ class Config:
     SQLALCHEMY_DATABASE_URI = f"sqlite:///{os.path.join(base_dir, 'app.db')}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    ELASTICSEARCH_URL = config("ELASTICSEARCH_URL")
+
     POSTS_PER_PAGE = 3
 
     MAIL_SERVER = config('MAIL_SERVER')

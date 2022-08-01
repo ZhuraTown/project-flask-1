@@ -9,6 +9,9 @@
           {% else %}
           <title> Blog - Only </title>
           {% endif %}
+      {{ moment.include_moment() }}
+      {{ moment.lang("ru") }}
+
       {% endblock %}
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   </head>
@@ -29,15 +32,15 @@
     <div class="col-md-auto">
         <nav class="navbar bg-light">
           <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url_for('main') }}">Главная</a>
-            <a class="navbar-brand" href="{{ url_for('explore') }}">Исследовать</a>
-            <a class="navbar-brand" href="{{ url_for('blog') }}">Блог</a>
-            <a class="navbar-brand" href="{{ url_for('about') }}">Об сайте</a>
+            <a class="navbar-brand" href="{{ url_for('main.main') }}">Главная</a>
+            <a class="navbar-brand" href="{{ url_for('main.explore') }}">Исследовать</a>
+            <a class="navbar-brand" href="{{ url_for('main.blog') }}">Блог</a>
+            <a class="navbar-brand" href="{{ url_for('main.about') }}">Об сайте</a>
                 {% if current_user.is_anonymous %}
-                <a class="navbar-brand" href="{{ url_for('login') }}">Войти</a>
+                <a class="navbar-brand" href="{{ url_for('auth.login') }}">Войти</a>
               {% else %}
-                <a class="navbar-brand" href="{{ url_for('user', username=current_user.username) }}">Профиль</a>
-                <a class="navbar-brand" href="{{ url_for('logout') }}">Выйти</a>
+                <a class="navbar-brand" href="{{ url_for('main.user', username=current_user.username) }}">Профиль</a>
+                <a class="navbar-brand" href="{{ url_for('auth.logout') }}">Выйти</a>
                 {% endif %}
           </div>
         </nav>
